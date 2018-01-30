@@ -11,3 +11,10 @@ C:\Users\admin\Desktop\EthSketch\EthSketch\obj\Debug\EthSketch.csprojResolveAsse
 C:\Users\admin\Desktop\EthSketch\EthSketch\obj\Debug\EthSketch.csproj.CoreCompileInputs.cache
 C:\Users\admin\Desktop\EthSketch\EthSketch\obj\Debug\EthSketch.exe
 C:\Users\admin\Desktop\EthSketch\EthSketch\obj\Debug\EthSketch.pdb
+C:\Projects\EthSketch\EthSketch\bin\Debug\EthSketch.exe.config
+C:\Projects\EthSketch\EthSketch\bin\Debug\EthSketch.exe
+C:\Projects\EthSketch\EthSketch\bin\Debug\EthSketch.pdb
+C:\Projects\EthSketch\EthSketch\obj\Debug\EthSketch.csprojResolveAssemblyReference.cache
+C:\Projects\EthSketch\EthSketch\obj\Debug\EthSketch.csproj.CoreCompileInputs.cache
+C:\Projects\EthSketch\EthSketch\obj\Debug\EthSketch.exe
+C:\Projects\EthSketch\EthSketch\obj\Debug\EthSketch.pdb
