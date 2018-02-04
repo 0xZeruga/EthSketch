@@ -42,11 +42,13 @@ namespace EthSketch
             }
         }
 
-        public Pixel(int pX, int pY){
+        public Pixel(uint pX, uint pY){
             Times_Purchased = 0;
+            xpos = pX;
+            ypos = pY;
             color = ConsoleColor.White;
             if (pX == pY){
-                Console.WriteLine(pX);
+                //Console.WriteLine(pX);
             }
         }
     }
