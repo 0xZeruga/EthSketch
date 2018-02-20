@@ -5,15 +5,20 @@ import "./SafeMath.sol";
 
 contract Pixel is IERC20 {
 
-    function Pixel(bytes32 name) {
-        Name = name;
+    function Pixel(uint256 Cost, uint256 Times_Purchased, uint256 STARTCOST, string HexColorString, uint256 xPos, uint256 yPos ) {
+        Cost = cost;
+        Times_Purchased = times_Purchased;
+        STARTCOST = startprice;
+        HexColorString = colorHex;
+        xPos = x_pos;
+        yPos = y_pos;
     }
+    
+    using SafeMath for uint256;
+    
     //Positions
     uint public x_pos;
     uint public y_pos;
-    
-    //Name of owner
-    bytes32 public Name;
     
     //Color default to white
     string public colorHex = "#ffffff";
@@ -27,19 +32,23 @@ contract Pixel is IERC20 {
     //The current price of pixel
     uint256 public cost;
 
-    function get_cost(uint _startprice, uint _times, Pixel _pixel) public returns(uint cost) {
-        return _pixel.cost = _startprice*(_times+1);
+    //Get the Cost
+    function get_cost(uint _startprice, uint256 _times) public returns(uint cost) {
+        return _startprice*(_times+1);
     }
 
-    function add_pixel_purchase_counter(uint _times, Pixel _pixel) returns(uint times_Purchased) {
-        return _pixel.timesPurchased.add(1);
+    //Safely increments counter
+    function add_pixel_purchase_counter(uint256 _times) returns (uint times_Purchased) {
+        return _times.add(1);
     }
     
-    function set_color_hex(Pixel _pixel, string _hex) {
-        _pixel.colorHex = _hex;
+    //Returns hex color
+    function set_color_hex(Pixel _pixel, string _hex) returns (string hex_Color) {
+        return _hex;
     }
-    function set_X(Pixel _pixel, uint256 x) {
-        _pixel.x_pos = x;
+    
+    function set_X(Pixel _pixel, uint256 x) returns (uint256 xpos) {
+        return x;
     }
     function set_Y(Pixel _pixel, uint256 y) {
         _pixel.y_pos = y;
@@ -52,6 +61,30 @@ contract Pixel is IERC20 {
 contract Canvas {
 
     using SafeMath for uint256;
+    Pixel[] public PixelArray; 
+
+    struct Pixel {
+        uint256 Cost;
+        uint256 Times_Purchased;
+        uint256 STARTCOST; //In wei
+        string HexColorString;
+        uint256 xPos;
+        uint256 yPos;
+    }
+    
+    Pixel MyPixel = Pixel({Cost:0, Times_Purchased:0, STARTCOST:500, HexColorString:"#ffffff", xPos:0, yPos:0});
+    
+    
+    //Assign x and y for each pixel in array
+    function Initialize(Pixel[] p_Array) {
+        for(uint i = 0; i < p_Array.length; i++) {
+            p_Array[i].xPos = i;
+            for(uint j = 0; j < p_Array.length; j++) {
+                p_Array[j].yPos = j;
+            }
+        }    
+    }
+    
 
     bytes32[] Names;
     uint256[] X_List;
@@ -59,8 +92,8 @@ contract Canvas {
     address[] newContracts;
     
     //Add new pixel with address
-    function createContract (bytes32 name) {
-        address newContract = Pixel(name);
+    function createContract (uint256 Cost, Times_Purchased,STARTCOST,HexColorString,Xpos,Ypos) {
+        address newContract = Pixel(Cost, Times_Purchased, STARTCOST,HexColorString,Xpos,Ypos);
         //Add contract to list of contracts
         newContracts.push(newContract);
     }
@@ -103,8 +136,6 @@ contract Canvas {
 
     uint256 public max_x;
     uint256 public max_y;
-
-    bool public isExpandable;
 
     function Canvas() {
         max_x = 256;
