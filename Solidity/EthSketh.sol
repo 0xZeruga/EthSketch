@@ -55,7 +55,6 @@ contract Canvas {
     mapping(address => mapping(address =>uint256)) allowed;
 
     using SafeMath for uint256;
-    Pixel[] public PixelArray; 
     
     address[] newContracts;
     
@@ -108,16 +107,16 @@ contract Canvas {
     uint256 constant PIXELAMOUNT = 10000;
     
     //Add one empty pixel contract
-    function AddEmptyPixel(uint256 id) private {
+    function AddEmptyPixel(uint256 id) public {
                 address newContract =  Pixel(id);
                 //Add contract to list of contracts
                 newContracts.push(newContract);
     }
     
     //Populate pixel contract with PIXELAMOUNT
-    function AddEmptyPixels(uint256 amount) private {
+    function AddEmptyPixels(uint256 amount) public {
         for (uint i = 0; i < amount; i++) {
-            AddEmptyPixels(i);
+            AddEmptyPixel(i);
         }
     }
 
@@ -138,7 +137,7 @@ contract Canvas {
     
     //Add initial empty pixels on contract start.
     function Canvas() public {
-        AddEmptyPixels(PIXELAMOUNT);
+       
     }
     
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
