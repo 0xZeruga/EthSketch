@@ -30,30 +30,33 @@ contract Pixel is IERC20 {
     uint256 public times_Purchased = 0;
     
     //The current price of pixel
-    uint256 public cost;
+    uint256 public cost = getcost(startprice,times_Purchased);
 
     //Get the Cost
-    function get_cost(uint _startprice, uint256 _times) public returns(uint cost) {
+    function getcost(uint _startprice, uint256 _times) public returns(uint cost) {
         return _startprice*(_times+1);
     }
 
     //Safely increments counter
-    function add_pixel_purchase_counter(uint256 _times) returns (uint times_Purchased) {
+    function addpixelpurchasecounter(uint256 _times) returns (uint times_Purchased) {
         return _times.add(1);
     }
     
     //Returns hex color
-    function set_color_hex(Pixel _pixel, string _hex) returns (string hex_Color) {
+    function setcolorhex(Pixel _pixel, string _hex) returns (string hex_Color) {
+        _pixel.colorHex = _hex;
         return _hex;
     }
     
-    function set_X(Pixel _pixel, uint256 x) returns (uint256 xpos) {
+    function setX(Pixel _pixel, uint256 x) returns (uint256 xpos) {
+        _pixel.xpos = x;
         return x;
     }
-    function set_Y(Pixel _pixel, uint256 y) {
+    function setY(Pixel _pixel, uint256 y) returns (uint256 ypos) {
         _pixel.y_pos = y;
+        return y;
     }
-    function get_Cost(Pixel _pixel) returns (uint256 cost) {
+    function getCost(Pixel _pixel) returns (uint256 cost) {
         return _pixel.cost;
     }
 }
@@ -72,30 +75,30 @@ contract Canvas {
         uint256 yPos;
     }
     
-    Pixel MyPixel = Pixel({Cost:0, Times_Purchased:0, STARTCOST:500, HexColorString:"#ffffff", xPos:0, yPos:0});
-    
-    
-    //Assign x and y for each pixel in array
-    function Initialize(Pixel[] p_Array) {
-        for(uint i = 0; i < p_Array.length; i++) {
-            p_Array[i].xPos = i;
-            for(uint j = 0; j < p_Array.length; j++) {
-                p_Array[j].yPos = j;
-            }
-        }    
-    }
-    
-
-    bytes32[] Names;
-    uint256[] X_List;
-    uint256[] Y_List;
     address[] newContracts;
     
-    //Add new pixel with address
-    function createContract (uint256 Cost, Times_Purchased,STARTCOST,HexColorString,Xpos,Ypos) {
-        address newContract = Pixel(Cost, Times_Purchased, STARTCOST,HexColorString,Xpos,Ypos);
-        //Add contract to list of contracts
-        newContracts.push(newContract);
+    //Create Pixel Contract
+    //i and j values sets x and y.
+    function createContract (uint256 cost, uint256 Times_Purchased,uint256 STARTCOST, string HexColorString,uint256 Xpos, uint256 Ypos) {
+        for (uint i = 0; i < 100; i++) {
+            for (uint j = 0; j < 100; j++) {
+                address newContract = Pixel(cost, Times_Purchased, STARTCOST,HexColorString,i,j);
+                //Add contract to list of contracts
+                newContracts.push(newContract);
+            }
+            
+        }
+    }
+
+    //Loop every index and set x and y values for each contract.
+    //TODO: This might be unnecessary. 
+    function LoopContract(address[] p_Contracts) {
+        for (uint i = 0; i < p_Contracts.length; i++) {
+            p_Contracts[i].set_X(i);
+            for (uint j = 0; j < p_Contracts.length; j++) {
+                p_Contracts[j].set_Y(j);
+            }
+        } 
     }
 
     //Get name of index i
@@ -133,9 +136,6 @@ contract Canvas {
         Pixel con = Pixel(newContracts[i]);
         return con.x_pos;
     }
-
-    uint256 public max_x;
-    uint256 public max_y;
 
     function Canvas() {
         max_x = 256;
