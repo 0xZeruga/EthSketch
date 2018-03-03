@@ -1,5 +1,11 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   padding-top: 5rem;
+  margin-bottom: 60px;
 }
 
 .starter-template {
@@ -8,9 +14,18 @@ body {
 }
 
 .pixel {
-  display: inline-block;
   width: 10px;
   height: 10px;
   margin: 0;
   padding: 2px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  background-color: #343A40;
+  color: #FFFFFF;
 }

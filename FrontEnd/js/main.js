@@ -10,16 +10,21 @@ const colors = [
     "#aaa"
 ]
 
+// Create a pixel with all of it's attributes set.
 function createPixel() {
-    let pixel = document.createElement("div");
+    let pixel = document.createElement("span");
     pixel.className = "pixel";
 
+    // Use random colors for testing.
     let color = colors[Math.floor(Math.random() * colors.length)];
     pixel.style.backgroundColor = color;
+    
+    pixel.addEventListener("click", displayPixelInfo);
 
     return pixel;
 }
 
+// Add pixels to the main canvas.
 function addPixels() {
     let canvas = document.getElementById("main-canvas");
 
@@ -28,6 +33,11 @@ function addPixels() {
 
         canvas.appendChild(pixel);
     }
+}
+
+// Display info about a certain pixel.
+function displayPixelInfo(event) {
+    console.log(`Clicking on element ${event.target}` );
 }
 
 addPixels();
