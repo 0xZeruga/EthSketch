@@ -19,71 +19,56 @@ contract Canvas {
         uint256 id;
         uint256 x;
         uint256 y;
-        uint256 constant start;
+        uint256 start;
         bytes32[] color;
         uint256 count;
         
         address owner;
-        
-        //TODO: Find out a way to parse uint256 to bytes32[]
-       // uint256 p = GetPrice(start,count);
     }
     
-
     //Determines max Size in X and Y of the Canvas
     uint256 constant Size_X = 100;
     uint256 constant Size_Y = 100;
+    uint256 constant START_PRICE = 5;
+    uint256 id = 1;
     
-    //TODO: Find a way to initiate 2D-array of structs.
-    PixelTest A[Size_X][Size_Y]={0};
-    int i;
-    int j;
-    int x = 0;
+    //TODO Port bytes32 to hex and back.
+    bytes32[] color;
+    PixelTest[] public pixels;
     
-    //Creates inital pixels as structs and sets their default values.
-    for(i=0; i<Size_X;i++) {
-        for(j=0; j<Size_Y; j++) {
-            struct PixelTest A[i][j] t = {x,u,j,5,#FFFFFF,0};
-            t.id = x;
-            x++
+    //Add initial empty pixels on contract start.
+    function Canvas() public {
+       SetInitialPixels();
+    }
+    
+    function SetInitialPixels()  {
+        for (uint i=0; i<Size_X;i++) {
+            for (uint j=0; j<Size_Y; j++) {
+            PixelTest memory pixel = PixelTest(id,i,j,START_PRICE,color,0,owner);
+            pixels.push(pixel);
+            id++;
+            }
         }
     }
     
     //Get examples
     
-    //Find Struct by coordinate
-    function GetPixelByCord(uint256 _x, uint256 _y) returns (struct p) {
-        for(int i = 0; i <Size_X; i++) {
-            for(int j = 0; j <Size_Y; j++) {
-                if(A[i][j] == A[_x][_y]) {
-                    return A[i][j];
-                }
-            }
-        }
-    }
-    
-    //Find Struct by id
-    function GetPixelById(uint256 _id) returns (struct p) {
-        for(int i = 0; i <Size_X; i++) {
-            for(int j = 0; j <Size_Y; j++) {
-                if(A[i][j].id == _id) {
-                    return A[i][j];
-                }
-            }
-        }
+    //Get pixel by index
+    function getPixel(uint n) public constant returns (uint256, uint256, uint256, uint256, bytes32[], uint256, address) {
+        return (pixels[n].id, pixels[n].x, pixels[n].y, pixels[n].start, pixels[n].color ,pixels[n].count, pixels[n].owner);
     }
     
     //Get color
-    function GetColor(uint256 _x, uint256 _y) public view returns (bytes32[] color) {
-        return A[_x,_y].color;
+    function GetColor(uint n) public view returns (bytes32[] color) {
+        return pixels[n].color;
     }
     //Get count
-    function GetCount(uint256 _x, uint256 _y) public view returns (uint256 count) {
-        return A[_x,_y].count;
+    function GetCount(uint n) public view returns (uint256 count) {
+        return pixels[n].count;
     }
     //Get cost
-    function GetPixelPrice(uint256 _x, uint256 _y) public view returns (uint256 cost) {
-        return GetPrice(A[_x][_y].start,A[_x,_y].count);
+    function GetPixelPrice(uint n) public view returns (uint256 cost) {
+        return GetPrice(pixels[n].start,pixels[n].count);
     }
     //Get cost pure
     function GetPrice(uint256 _start, uint256 _count) pure returns (uint256 _price) {
@@ -94,17 +79,17 @@ contract Canvas {
     //Set examples
     
     //Set cost
-    function SetC(uint256 _x, uint256 _y, bytes32[] _c) {
-        A[_x,_y].c = _c;
+    function SetColor(uint n, bytes32[] _c) {
+        pixels[n].color = _c;
     }
-    function SetOwner(address _sender, uint _x, uint _y) {
-        A[_x, _y].owner = _sender;
+    function SetOwner(uint n, address _sender) {
+        pixels[n].owner = _sender;
     }
-    function IncrementCounter(uint256 _x, uint256 _y) {
-        A[_x,_y].count = A[_x,_y].count.add(1);
+    function IncrementCounter(uint256 n) {
+        pixels[n].count = pixels[n].count.add(1);
     }
-    function SetHexColor(uint256 _x, uint256 _y, bytes32[] _color) {
-        A[_x,_y].color = _color;
+    function SetHexColor(uint256 n, bytes32[] _color) {
+        pixels[n].color = _color;
     }
     
     
@@ -139,24 +124,15 @@ contract Canvas {
         return true;
     }
     
-    function getTransfer(address _to, uint256 _value, uint256 _id, string _hex) public returns (bool success) {
+    function getTransfer(address _to, uint256 _value, uint256 _id, bytes32[] _color) public returns (bool success) {
         require(transfer(_to,_value)); 
-            setColor(_id,_hex);
-            increaseCost(_id);
+            SetColor(_id,_color);
+            IncrementCounter(_id);
             return true;
-    }
-    
-    function increaseCost(uint256 i) public view {
-        getContract(i).addpixelpurchasecounter();
     }
 
     function allowance(address _owner, address _spender) public constant returns (uint256 remaining) {
          return allowed[_owner][_spender];
-    }
-    
-    //Add initial empty pixels on contract start.
-    function Canvas() public {
-       
     }
     
     event Transfer(address indexed _from, address indexed _to, uint256 _value);
