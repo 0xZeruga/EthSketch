@@ -1,13 +1,13 @@
 FROM node:9
 
-ADD package.json yarn.lock /
+COPY package.json yarn.lock /
 
 ENV NODE_PATH=/node_modules
 ENV PATH=$PATH:/node_modules/.bin
 RUN yarn
 
 WORKDIR /app
-ADD . /app
+COPY . /app
 
 EXPOSE 3000
 
