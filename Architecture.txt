@@ -1,0 +1,20 @@
+Architecture
+
+Set up docker.
+Docker starts an Ethereum Node and keeps it running.
+Docker also sets up all parts necessary for front.
+
+The Ether Node runs the Ethereum Blockchain and manages all logic that happens in solidity
+
+JavaScript draws the UI and enables user to highlight and chose colours for pixels, aswell as confirm transactions.
+When the User triggers a transaction, Javascript sends out  a hashstring to Swarm.
+Swarm returns the stored static address where the Ether  is stored.
+JavaScript inserts the address as the recieving address of the Metamask transaction.
+
+Metamask then checks whether the sender either can afford or not afford the transaction.
+If the transaction is successful the data is parsed through Solidity's logic.
+Solidity finds the pixel, edit its color and then sends it to Swarm.
+Swarm saves pixelid/coordinate, color and owner address.
+Javscript regularly retrives the data from swarm (with URL access) and draws the canvas correspondingly.
+
+ 
