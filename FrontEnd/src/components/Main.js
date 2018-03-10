@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ButtonToolbar, Button, Form, FormGroup, FormControl, Jumbotron } from 'react-bootstrap'
+import { Grid, Row, Button, Form, FormGroup, FormControl } from 'react-bootstrap'
 
 const pixelAmount = 2000
 
@@ -42,27 +42,27 @@ class Main extends Component {
 
     render() {
         return (
-            <main role="main" className="container">
-                <Jumbotron>
+            <Grid>
+                <Row className="show-grid">
                     <h1>Bootstrap starter template</h1>
                     <p className="lead">A bareboned bootstrap example</p>
-                </Jumbotron>
+                </Row>
 
-                <Jumbotron id="main-canvas" bsClass="main-canvas">
-                </Jumbotron>
+                <Row id="main-canvas" className="show-grid">
+                </Row>
+
+                <Row className="show-grid">
                     <Form horizontal>
-                        <FormGroup bsClass="colorPicker" bsSize="lg" controlId="pixelColor">
+                        <FormGroup bsClass="colorPicker" controlId="pixelColor">
                             <FormControl type="color" value="#ff0000"/>
                         </FormGroup>
 
-                        <FormGroup bsSize="lg" controlId="confirmButton">
+                        <FormGroup controlId="confirmButton">
                             <Button disabled>Confirm</Button>
                         </FormGroup>
                     </Form>
-                <Jumbotron bsClass="container">
-                    
-                </Jumbotron>      
-            </main>
+                </Row>
+            </Grid>
         )
     }
 }
