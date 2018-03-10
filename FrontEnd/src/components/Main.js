@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { ButtonToolbar, Button, Form, FormGroup, FormControl, Jumbotron } from 'react-bootstrap'
 
 const pixelAmount = 2000
 
@@ -42,12 +43,25 @@ class Main extends Component {
     render() {
         return (
             <main role="main" className="container">
-                <div className="starter-template">
+                <Jumbotron>
                     <h1>Bootstrap starter template</h1>
                     <p className="lead">A bareboned bootstrap example</p>
-                </div>
+                </Jumbotron>
 
-                <div id="main-canvas" className="no-gutters" />
+                <Jumbotron id="main-canvas" bsClass="main-canvas">
+                </Jumbotron>
+                    <Form horizontal>
+                        <FormGroup bsClass="colorPicker" bsSize="lg" controlId="pixelColor">
+                            <FormControl type="color" value="#ff0000"/>
+                        </FormGroup>
+
+                        <FormGroup bsSize="lg" controlId="confirmButton">
+                            <Button disabled>Confirm</Button>
+                        </FormGroup>
+                    </Form>
+                <Jumbotron bsClass="container">
+                    
+                </Jumbotron>      
             </main>
         )
     }

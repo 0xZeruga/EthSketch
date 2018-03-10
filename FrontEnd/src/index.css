@@ -26,6 +26,10 @@ body {
   width: 100%;
   height: 60px;
   line-height: 60px;
-  background-color: #343A40;
+  background-color: #222222;
   color: #FFFFFF;
+}
+
+.colorPicker {
+  width: 200px;
 }
