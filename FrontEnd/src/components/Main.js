@@ -12,7 +12,8 @@ import { Pixel } from './Pixel'
 
 class Main extends Component {
     state = {
-        pixels: []
+        pixels: [],
+        color: '#ff0000'
     }
     pixelAmount = 10000
     colors = ['#000', '#111', '#333', '#555', '#777', '#888', '#aaa']
@@ -36,6 +37,11 @@ class Main extends Component {
 
     displayPixelInfo(event) {
         console.log(`Clicking on element ${event.target}`)
+    }
+
+    handleColorChange(event) {
+        event.preventDefault()
+        this.setState({ color: event.target.value })
     }
 
     render() {
@@ -62,7 +68,11 @@ class Main extends Component {
                             bsClass="colorPicker"
                             controlId="pixelColor"
                         >
-                            <FormControl type="color" value="#ff0000" />
+                            <FormControl
+                                type="color"
+                                value={this.state.color}
+                                onChange={this.handleColorChange.bind(this)}
+                            />
                         </FormGroup>
 
                         <FormGroup controlId="confirmButton">
