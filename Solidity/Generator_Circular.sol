@@ -87,7 +87,7 @@ contract NextGenerator is Generator() {
 }
 
 //String can parse to bytes32 without any conversion!
-contract HelloWorld {  
+contract HelloWorld {
     event log_string(bytes32 log); // Event
 
     function () { // Fallback Function
