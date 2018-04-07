@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./FrontEnd
+    volumes:
+      - ./FrontEnd/src:/app/src
+      - ./FrontEnd/public:/app/public
+    ports:
+      - "3000:3000"
