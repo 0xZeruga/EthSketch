@@ -1,0 +1,40 @@
+Installing Ethereum Blockchain
+
+sudo npm install -g truffle
+truffle
+truffle version (should be at least v4.x.x)
+npm install -g ganache-cli
+npm i -g how-to-npm
+how-to-npm
+
+//Follow login procedure and then Start a Project
+//Enter default values within parenthesis under Start a Project
+
+npm install --save-dev webpack //this updates your webpack from 2.4 to 4
+
+ganache-cli
+
+//Your Node.js cmd is now listening to the blockchain hosted on a localhost port.
+//We can now set up what is supposed to run through Truffle
+
+Open a second terminal
+Cd to repo
+truffle help (will display a bunch of options)
+truffle init (to start a new project)
+truffle compile (to check compilation after making code changes)
+truffle deploy (runs migrations to deploy contract) //DO NOT REMOVE MIGRATION FILES
+truffle test (runs JS and Sol tests)
+
+I recommend creating a testfolder where you run
+truffle unbox  (it will create an example project)
+
+Have fun!
+
+
+Useful links
+
+https://blog.zeppelin.solutions/the-hitchhikers-guide-to-smart-contracts-in-ethereum-848f08001f05
+
+https://hackernoon.com/tips-and-tricks-for-adding-metamask-to-your-ui-32728b437194
+
+https://medium.com/metamask/metamask-hackathon-guide-a88a161416ce
