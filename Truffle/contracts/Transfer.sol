@@ -1,10 +1,18 @@
 pragma solidity ^0.4.20;
 
+import "./AccessRestriction.sol";
+
 /*This contract will handle the Ether recieved from
   transactions and send it to the vault which is private.
 */
 contract Vault {
 
+  address private owner = msg.sender;
+
+  modifier ownerFunc {
+      require(owner == msg.sender);
+      _;
+  }
   //Initial Balance for testing
   function Vault {
     address(this).balance = 10000;
@@ -12,9 +20,11 @@ contract Vault {
 
   //This is called automatically when contract recieves Ether.
   function () public payable {
-
   }
-  function getBalance() public returns (uint) {
+
+  //Ensures only owner can see value at address
+  function getBalance() constant private returns (uint) {
+    require(ownerFunc);
     return address(this).balance;
   }
 }
