@@ -53,5 +53,11 @@ namespace BackEnd.Controllers
 
             return Ok();
         }
+
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return new OkObjectResult("Pixel controller test is working!");
+        }
     }
 }
