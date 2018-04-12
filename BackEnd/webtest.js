@@ -45,6 +45,7 @@ const abi = [{
   "type" : "function"
 }]
 
+//TODO: Insert our wallet address here, prefably access from DB at a later point
 const address = '0xdeadbeef123456789000000000000'
 
 function initContract (contract) {

@@ -1,0 +1,7 @@
+https://ethereum.stackexchange.com/questions/24419/how-would-you-integrate-ethereum-smart-contracts-into-an-existing-node-react-pro/24421#24421
+
+http://hypernephelist.com/2016/06/21/a-simple-smart-contract-ui-web3.html
+
+https://solidity.readthedocs.io/en/develop/using-the-compiler.html#compiler-input-and-output-json-description
+
+http://truffleframework.com/docs/getting_started/javascript-tests

@@ -8,3 +8,9 @@ services:
       - ./FrontEnd/public:/app/public
     ports:
       - "3000:3000"
+  backend:
+    build: ./BackEnd
+    volumes:
+      - ./BackEnd/src/chain
+    ports:
+      - "8545:8545"
