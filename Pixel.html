@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equv="X-UA-Compatible" contant="ie=edge">
+    <title> Document</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Pixel input</h1>
+        <span id="countPurchasedPixel"></span>
+
+        <h2 id="PixelTransaction id"</h2>
+        <span id="pixTrans"></span>
+        <hr>
+
+        <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+
+        <label from="xCord" class="col-lg-2 control-label">X Coordinate</label>
+        <input id="xCord" type="text">
+
+        <label from="yCord" class="col-lg-2 control-label">Y Coordinate</label>
+        <input id="yCord" type="text">
+
+
+        <label from="Color" class="col-lg-2 control-label">Pixel Color</label>
+        <input id="Color" type="text">
+
+        <label from="Owner" class="col-lg-2 control-label">Pixel Owner</label>
+        <input id="Owner" type="text">
+
+        <button class="button">Update Pixel</button>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquyery-3.2.1.slim.min.js"></script>
+
+    <script>
+
+    function listenForClicks(Pixel) {
+      var button = document.querySelector('button.transferFunds')
+      button.addEventListener('click', function() {
+        Pixel.transfer(toAddres,value, {from :addr})
+        .then(function (txHash) {
+          console.log()'Transaction sent')
+          console.dir(txHash)
+          waitForTxToBeMined(txHash)
+        })
+        .catch(console.error)
+      }
+    }
+
+    var inWei =web3.toWait('10', 'ether')
+
+    async function waitForTxToBeMined(txHash) {
+      let txReceipt
+      while(!txReceipt) {
+        try {
+          txReceipt = await eth.getTransactionReceipt(txHash)
+        }
+        catch(err) {
+          return indicateFailure(err)
+        }
+      }
+      indicateSuccess()
+    }
+
+    window.addEventListener('load, function()') {
+      if (typeof web3 !== 'undefined') {
+          web3 = new Web3(web3.currentProvider);
+      }
+      else {
+          web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+      }
+    }
+        const Eth = require('ethjs-query');
+        const EthContract = require('ethjs-contract');
+
+        function startApp(web3) {
+          const eth = new Eth(web3.currentProvider);
+          const contract = new EthContract(eth);
+
+          initContract();
+        }
+
+
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+
+        var pixelAbi = web3.eth.contract([[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"name": "tokens",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"name": "tokens",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFrom",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "isowned",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "tokenOwner",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "balance",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"name": "tokens",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "tokenOwner",
+				"type": "address"
+			},
+			{
+				"name": "spender",
+				"type": "address"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"name": "remaining",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "tokens",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "tokenOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "tokens",
+				"type": "uint256"
+			}
+		],
+		"name": "Approval",
+		"type": "event"
+	}
+]
+])
+        //Insert contract address
+        var PixelContractAddress = pixelAbi.at("0x0");
+        console.log(PixelContractAddress);
+
+        var PixelEvent = PixelContractAddress.pixelInfo({},'latest');
+
+        PixelEvent.watch(function(error,result)  {
+            if(!error) {
+                if (result.blockhast != $('#pixTrans').html())
+                $("#loader").hide();
+
+            $("#pixTrans").html('Block hash: ' + result.blockHash);
+            $("#pixel").html(web3.toAscii(result.args.xCord) + ' ' + web3.toAscii(result.args.yCord) + ' ' + web3.toAscii(result.args.Color) + ' ' + web3.toAscii(result.args.Owner));
+            }
+            else {
+                $("#loader").hide();
+            }
+         });
+
+        PixelContractAddress.countPixels((err, res) => {
+            if (res)
+            $("#countPix").html(res.p + ' Pixels');
+        });
+
+        $("#button").click(function() {
+            PixelContractAddress.setPixel(web3.eth.defaultAccount, $("#xCord").val(), $("#yCord").val(), $("#Color").val(), $("#Owner").val(), (err,res) => {
+            $("#loader").show();
+            if(err) {
+                $("#loader").hide();
+                console.log('Something went wrong!');
+            }
+        });
+    });
+
+    </script>
+
+</body>
+</html>
