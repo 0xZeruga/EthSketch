@@ -1,5 +1,3 @@
-
-
 pragma solidity ^0.4.20;
 
 contract Owner {
@@ -25,7 +23,6 @@ contract Owner {
     event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
 
-
 //TODO: Find a way to make sure a pixel cant be overwritten twice the same block;
 
 contract Pixelhandler is Owner {
@@ -49,7 +46,6 @@ contract Pixelhandler is Owner {
         uint256 y,
         bytes16 color,
         address pixelowner
-
     );
 
     function CleanSlate(address _a) public superuser returns (uint) {
@@ -71,13 +67,13 @@ contract Pixelhandler is Owner {
         balances[from] = balances[from] -= amount;
         allowed[from][msg.sender] = allowed[from][msg.sender]-=amount;
         balances[to] = balances[to] += amount;
-        emit Transfer(from, to, amount);
+        Transfer(from, to, amount);
         return true;
     }
 
     function approve(address spender, uint amount) public returns (bool success) {
         allowed[msg.sender][spender] = amount;
-        emit Approval(msg.sender, spender, amount);
+        Approval(msg.sender, spender, amount);
         return true;
     }
 
@@ -87,7 +83,7 @@ contract Pixelhandler is Owner {
     x & y = position parsed through Javascrip canvas
     color = from color picked -> parsed to bytes16 from hex
     */
-    function SetPixelColor(uint256 _x, uint256 _y, bytes16 _color, address _address) public superuser {
+    function setPixelColor(uint256 _x, uint256 _y, bytes16 _color, address _address) public superuser {
         var pixel = pixels[_address];
         pixel.pixelowner = _address;
         pixel.x = _x;
@@ -110,35 +106,5 @@ contract Pixelhandler is Owner {
 
     function getBlockhash(uint _blocknr) public view returns (bytes32) {
         return block.blockhash(_blocknr);
-    }
-}
-
-//Thinking about auctioning pixels instead of selling them to negate the
-//"override" effect and ensure only the one that wins the bids pays for it.
-
-contract pixelauction {
-    address highestBidder;
-    uint highestBid;
-    mapping(address => uint) refunds;
-
-    function bid() external payable {
-        require(msg.value >= highestBid);
-
-        if (highestBidder != 0) {
-            refunds[highestBidder] += highestBid; // record the refund that this user can claim
-        }
-
-        highestBidder = msg.sender;
-        highestBid = msg.value;
-    }
-
-    function withdrawRefund() external {
-        uint refund = refunds[msg.sender];
-        refunds[msg.sender] = 0;
-        msg.sender.transfer(refund);
-    }
-
-    function getHighestBid() public constant returns (uint) {
-        return highestBid;
     }
 }

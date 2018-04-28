@@ -14,7 +14,7 @@
 
 <body>
     <div class="container">
-
+        
         <h1>Pixel input</h1>
         <span id="countPurchasedPixel"></span>
 
@@ -37,243 +37,34 @@
         <label from="Owner" class="col-lg-2 control-label">Pixel Owner</label>
         <input id="Owner" type="text">
 
-        <button class="button">Update Pixel</button>
+        button id="button">Update Pixel</button>
     </div>
 
 
     <script src="https://code.jquery.com/jquyery-3.2.1.slim.min.js"></script>
 
     <script>
-
-    function listenForClicks(Pixel) {
-      var button = document.querySelector('button.transferFunds')
-      button.addEventListener('click', function() {
-        Pixel.transfer(toAddres,value, {from :addr})
-        .then(function (txHash) {
-          console.log()'Transaction sent')
-          console.dir(txHash)
-          waitForTxToBeMined(txHash)
-        })
-        .catch(console.error)
-      }
-    }
-
-    var inWei =web3.toWait('10', 'ether')
-
-    async function waitForTxToBeMined(txHash) {
-      let txReceipt
-      while(!txReceipt) {
-        try {
-          txReceipt = await eth.getTransactionReceipt(txHash)
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
         }
-        catch(err) {
-          return indicateFailure(err)
+        else {
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
         }
-      }
-      indicateSuccess()
-    }
-
-    window.addEventListener('load, function()') {
-      if (typeof web3 !== 'undefined') {
-          web3 = new Web3(web3.currentProvider);
-      }
-      else {
-          web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-      }
-    }
-        const Eth = require('ethjs-query');
-        const EthContract = require('ethjs-contract');
-
-        function startApp(web3) {
-          const eth = new Eth(web3.currentProvider);
-          const contract = new EthContract(eth);
-
-          initContract();
-        }
-
 
         web3.eth.defaultAccount = web3.eth.accounts[0];
 
-        var pixelAbi = web3.eth.contract([[
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"name": "tokens",
-				"type": "uint256"
-			}
-		],
-		"name": "approve",
-		"outputs": [
-			{
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"name": "tokens",
-				"type": "uint256"
-			}
-		],
-		"name": "transferFrom",
-		"outputs": [
-			{
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "isowned",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "tokenOwner",
-				"type": "address"
-			}
-		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"name": "balance",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"name": "tokens",
-				"type": "uint256"
-			}
-		],
-		"name": "transfer",
-		"outputs": [
-			{
-				"name": "success",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "tokenOwner",
-				"type": "address"
-			},
-			{
-				"name": "spender",
-				"type": "address"
-			}
-		],
-		"name": "allowance",
-		"outputs": [
-			{
-				"name": "remaining",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "tokens",
-				"type": "uint256"
-			}
-		],
-		"name": "Transfer",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"name": "tokenOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"name": "spender",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"name": "tokens",
-				"type": "uint256"
-			}
-		],
-		"name": "Approval",
-		"type": "event"
-	}
-]
-])
+        var pixelAbi = web3.eth.contract([
+
+        ])
         //Insert contract address
         var PixelContractAddress = pixelAbi.at("0x0");
-        console.log(PixelContractAddress);
+        console.log(PixelContr-actAddress);
 
-        var PixelEvent = PixelContractAddress.pixelInfo({},'latest');
+        var PixelEvent = PixelContractAddress.pixelinfo({},'latest');
 
         PixelEvent.watch(function(error,result)  {
             if(!error) {
-                if (result.blockhast != $('#pixTrans').html())
+                if (result.blockHash != $('#pixTrans').html())
                 $("#loader").hide();
 
             $("#pixTrans").html('Block hash: ' + result.blockHash);
@@ -295,7 +86,7 @@
             if(err) {
                 $("#loader").hide();
                 console.log('Something went wrong!');
-            }
+            }            
         });
     });
 
