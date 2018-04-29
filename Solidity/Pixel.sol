@@ -91,7 +91,7 @@ contract Pixelhandler is Owner {
         pixel.color = _color;
 
         pixelOwners.push(_address)-1;
-        emit pixelinfo(_x, _y, _color, _address);
+        pixelinfo(_x, _y, _color, _address);
     }
 
     //Returns all addresses that currently owns pixels.
@@ -104,6 +104,11 @@ contract Pixelhandler is Owner {
         return (pixels[_address].x, pixels[_address].y, pixels[_address].color);
     }
 
+    function getCustomerAdress(address _address) public view returns (bool) {
+        require(_address == pixels[_address].Owner);
+        return true;
+    }
+    
     function getBlockhash(uint _blocknr) public view returns (bytes32) {
         return block.blockhash(_blocknr);
     }
