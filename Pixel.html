@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,7 +37,8 @@
         <label from="Owner" class="col-lg-2 control-label">Pixel Owner</label>
         <input id="Owner" type="text">
 
-        button id="button">Update Pixel</button>
+        <button id="UpdateButton">Update Pixel</button>
+        <button id="GetButton">Update Pixel</button>
     </div>
 
 
@@ -48,7 +49,7 @@
             web3 = new Web3(web3.currentProvider);
         }
         else {
-            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7777"));
         }
 
         web3.eth.defaultAccount = web3.eth.accounts[0];
@@ -80,7 +81,7 @@
             $("#countPix").html(res.p + ' Pixels');
         });
 
-        $("#button").click(function() {
+        $("#UpdateButton").click(function() {
             PixelContractAddress.setPixel(web3.eth.defaultAccount, $("#xCord").val(), $("#yCord").val(), $("#Color").val(), $("#Owner").val(), (err,res) => {
             $("#loader").show();
             if(err) {
@@ -88,16 +89,41 @@
                 console.log('Something went wrong!');
             }            
         });
-    });
+
+          $("#GetButton").click(function() {
+            PixelContractAddress.getCustomer(web3.eth.defaultAccount , (err,res) => {
+            $("#loader").show();
+            if(err) {
+                $("#loader").hide();
+                console.log('Something went wrong!');
+            }            
+        });
+
+        var lastblocknr = PixelContractAddress.getBlockhash();
+        if(lastblocknr != PixelContractAddress.getBlockhash()) {
+            //For each pixel in canvas, get color and draw it.
+            //This should run frequently.
+            var pixelowners = PixelContractAddress.getPixelOwners()
+            pixelowners.forEach(owner => {
+                var preparse = getCustomer(owner.PixelContractAddress);
+                var postparse = jQuery.parseJSON(ownerdata);
+                DrawPixel(postparse.x, postparse.y, postparse.Color);
+            });
+            lastblocknr = PixelContractAddress.getBlockhash();
+        }
+
+    function DrawPixel(x,y,color) {
+        //Set pixel x and ys color to color
+    }
 
     //Check that owner address in solidity is same as in browser. Called once transfer is done.
     function AssertOwner() {
-        if(PixelContractAddress.getCustomer(web3.eth.defaultAccount) {
+        if(PixelContractAddress.getCustomer(web3.eth.defaultAccount)) {
             //Change pixel color
         }
     }
+    });
 
     </script>
-
 </body>
 </html>

@@ -2,7 +2,8 @@ pragma solidity ^0.4.23;
 
 contract Owner {
 
-    address private superuseraddress;
+    address internal superuseraddress;
+    uint constant internal pixelfee = 500;
 
     function isowned() public {
         superuseraddress = msg.sender;
@@ -49,7 +50,7 @@ contract Pixelhandler is Owner {
     );
 
     function CleanSlate(address _a) public superuser returns (uint) {
-        setPixelColor(0, 0, "", _a);
+        setPixel(0, 0, "", _a);
     }
 
     mapping(address => Pixel) pixels;
@@ -80,18 +81,21 @@ contract Pixelhandler is Owner {
     /*
     Input parameters for this function is:
     address = caller of the function.
-    x & y = position parsed through Javascrip canvas
+    x & y = position parsed through Javascript canvas
     color = from color picked -> parsed to bytes16 from hex
     */
-    function setPixelColor(uint256 _x, uint256 _y, bytes16 _color, address _address) public superuser {
-        Pixel storage pixel = pixels[_address];
-        pixel.pixelowner = _address;
-        pixel.x = _x;
-        pixel.y = _y;
-        pixel.color = _color;
+    function setPixel(uint256 _x, uint256 _y, bytes16 _color, address _address) public superuser {
+        require(msg.sender == _address);
+        if(transferFrom(_address, superuseraddress, pixelfee)) {
+            Pixel storage pixel = pixels[_address];
+            pixel.pixelowner = _address;
+            pixel.x = _x;
+            pixel.y = _y;
+            pixel.color = _color;
 
-        pixelOwners.push(_address)-1;
-        emit pixelinfo(_x, _y, _color, _address);
+            pixelOwners.push(_address)-1;
+            emit pixelinfo(_x, _y, _color, _address);
+        }
     }
 
     //Returns all addresses that currently owns pixels.
