@@ -1,4 +1,4 @@
-pragma solidity ^0.4.20;
+pragma solidity ^0.4.23;
 
 contract Owner {
 
@@ -49,7 +49,7 @@ contract Pixelhandler is Owner {
     );
 
     function CleanSlate(address _a) public superuser returns (uint) {
-        SetPixelColor(0, 0, "", _a);
+        setPixelColor(0, 0, "", _a);
     }
 
     mapping(address => Pixel) pixels;
@@ -67,13 +67,13 @@ contract Pixelhandler is Owner {
         balances[from] = balances[from] -= amount;
         allowed[from][msg.sender] = allowed[from][msg.sender]-=amount;
         balances[to] = balances[to] += amount;
-        Transfer(from, to, amount);
+        emit Transfer(from, to, amount);
         return true;
     }
 
     function approve(address spender, uint amount) public returns (bool success) {
         allowed[msg.sender][spender] = amount;
-        Approval(msg.sender, spender, amount);
+        emit Approval(msg.sender, spender, amount);
         return true;
     }
 
@@ -84,14 +84,14 @@ contract Pixelhandler is Owner {
     color = from color picked -> parsed to bytes16 from hex
     */
     function setPixelColor(uint256 _x, uint256 _y, bytes16 _color, address _address) public superuser {
-        var pixel = pixels[_address];
+        Pixel storage pixel = pixels[_address];
         pixel.pixelowner = _address;
         pixel.x = _x;
         pixel.y = _y;
         pixel.color = _color;
 
         pixelOwners.push(_address)-1;
-        pixelinfo(_x, _y, _color, _address);
+        emit pixelinfo(_x, _y, _color, _address);
     }
 
     //Returns all addresses that currently owns pixels.
@@ -105,11 +105,11 @@ contract Pixelhandler is Owner {
     }
 
     function getCustomerAdress(address _address) public view returns (bool) {
-        require(_address == pixels[_address].Owner);
+        require(_address == pixels[_address].pixelowner);
         return true;
     }
     
     function getBlockhash(uint _blocknr) public view returns (bytes32) {
-        return block.blockhash(_blocknr);
+        return blockhash(_blocknr);
     }
 }
