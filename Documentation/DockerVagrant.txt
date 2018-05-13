@@ -1,0 +1,4 @@
+FORWARD_DOCKER_PORTS='true' vagrant up
+vagrant ssh
+docker run -d -p 3000:3000 -i -t vagrant_frontend
+curl -X GET "http://localhost:3000"
